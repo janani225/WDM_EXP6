@@ -1,6 +1,7 @@
 ### EX6 Information Retrieval Using Vector Space Model in Python
-### DATE: 
-### AIM: To implement Information Retrieval Using Vector Space Model in Python.
+### DATE: 12.04.24
+### AIM: 
+To implement Information Retrieval Using Vector Space Model in Python.
 ### Description: 
 <div align = "justify">
 Implementing Information Retrieval using the Vector Space Model in Python involves several steps, including preprocessing text data, constructing a term-document matrix, 
@@ -51,8 +52,18 @@ tfidf_matrix = tfidf_vectorizer.fit_transform(preprocessed_docs)
 
 # Calculate cosine similarity between query and documents
 def search(query, tfidf_matrix, tfidf_vectorizer):
-   // type your code here
+    preprocessed_query = preprocess_text(query)
+    query_vector = tfidf_vectorizer.transform([preprocessed_query])
 
+    # Calculate cosine similarity between query and documents
+    similarity_scores = cosine_similarity(query_vector, tfidf_matrix)
+
+    # Sort documents based on similarity scores
+    sorted_indexes = similarity_scores.argsort()[0][::-1]
+
+    # Return sorted documents along with their similarity scores
+    results = [(documents[i], similarity_scores[0, i]) for i in sorted_indexes]
+    return results
 # Example query
 query = "This is the second document."
 
@@ -60,12 +71,17 @@ query = "This is the second document."
 search_results = search(query, tfidf_matrix, tfidf_vectorizer)
 
 # Display search results
-print("Query:", query)
+i=1
 for result in search_results:
+    print("----------------------")
+    print("\nRank: ",i)
     print("Document:", result[0])
     print("Similarity Score:", result[1])
-    print("----------------------")
+
+    i=i+1
 ```
 ### Output:
+![image](https://github.com/Hariharan-061102/WDM_EXP6/assets/93427270/7e9f4f21-445c-4bbe-96e6-5ac8d33dd8e2)
 
 ### Result:
+Thus, the implementation of Information Retrieval has been done successfully using Vector Space Model in Python.
